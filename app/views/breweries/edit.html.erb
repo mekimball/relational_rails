@@ -1,8 +1,14 @@
 <form action="/breweries/<%= @brewery.id %>" method="post">
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <input type="hidden" name="_method" value="PATCH" />
-  <p>Edit</p>
-  <input type='text' name='brewery[title]' value="<%= @brewery.title %>"/><br/>
-  <textarea name='brewery[description]'><%= @brewery.description %></textarea><br/>
+  <p>Edit brewery name:</p>
+  <input type='text' name='brewery[brewery_name]'/><br/>
+  <p>Edit number of employees:</p>
+  <input type='integer' name='brewery[number_of_employees]'/><br/>
+  <label for="food_status"> <p>Does the brewery have food?</label><br/><br/>
+  <select has_food="food_status">
+    <option value=true> Yes</option>
+    <option value=false> No</option>
+  </select><br/><br/><br/>
   <input type='submit'/>
 </form>
