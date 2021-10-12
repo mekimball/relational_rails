@@ -1,0 +1,12 @@
+<h1>All Breweries</h1>
+<% @breweries.each do |brewery| %>
+  <h3><a href="/breweries/<%= brewery.id %>"><%= brewery.brewery_name %></a></h3>
+  <p><%= brewery.number_of_employees %> Employee(s)</p>
+  <p>Has food: <%= brewery.has_food %></p>
+  <a href="/breweries/<%= brewery.id  %>/edit">Edit</a>
+  <form action="/breweries/<%= brewery.id %>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="submit" value="delete"/>
+  </form>
+<% end %>

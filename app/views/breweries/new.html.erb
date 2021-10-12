@@ -1,0 +1,13 @@
+<form action="/breweries" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <p>Enter a new brewery name:</p>
+  <input type='text' name='brewery[brewery_name]'/><br/>
+  <p>Enter number of employees:</p>
+  <input type='integer' name='brewery[number_of_employees]'/><br/>
+  <label for="food_status"> <p>Does the brewery have food?</label><br/><br/>
+  <select has_food="food_status">
+    <option value=true> Yes</option>
+    <option value=false> No</option>
+  </select><br/><br/><br/>
+  <input type='submit'/>
+</form>
