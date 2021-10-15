@@ -1,0 +1,6 @@
+<h1>All Beers:</h1>
+<% @beers.each do |beer| %>
+  <p>Beer name: <%= beer.name %> |
+    Beer ABV: <%= beer.abv %> |
+    Is it an ale? <%= beer.is_an_ale %></p>
+<% end %>
