@@ -1,10 +1,9 @@
 class BreweriesController < ApplicationController
+  def index
+    @breweries = Brewery.all
+  end
 
-  def create
-    brewery = Brewery.new({
-      name: params[:brewery][:name],
-      number_of_employees: params[:brewery][:number_of_employees],
-      has_food: params[:brewery][:has_food]
-      })
+  def show
+    @brewery = Brewery.find(params[:id])
   end
 end
