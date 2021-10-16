@@ -1,4 +1,8 @@
+<a href="/breweries">Breweries Index</a>
+<a href="/beers">Beers Index</a>
+
 <h1>Breweries</h1>
+<% @breweries = @breweries.order("created_at desc") %>
 <% @breweries.each do |brewery| %>
-  <p><%= brewery.name %></p>
+  <p><%= brewery.name %>, created at <%= brewery.created_at %></p>
 <% end %>

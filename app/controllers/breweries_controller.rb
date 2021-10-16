@@ -4,6 +4,7 @@ class BreweriesController < ApplicationController
   end
 
   def show
+    @beers = Beer.where("brewery_id = #{params[:id]}")
     @brewery = Brewery.find(params[:id])
   end
 end
