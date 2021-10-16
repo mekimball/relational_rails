@@ -4,12 +4,13 @@ RSpec.describe 'the breweries show page' do
   before(:each) do
     @brewery1 = Brewery.create!({
       name: "Bob's Pub",
-      number_of_employees: 20,
+      number_of_employees: 635432,
       has_food: true
       })
+    sleep 1
     @brewery2 = Brewery.create!({
       name: "Ratio",
-      number_of_employees: 15,
+      number_of_employees: 655432,
       has_food: false
       })
     @beer1 = Beer.create!({
@@ -90,8 +91,68 @@ RSpec.describe 'the breweries show page' do
       expect(page).to_not have_content(@beer2.is_an_ale)
     end
   end
-end
 
-# As a visitor
-# When I visit '/child_table_name/:id'
-# Then I see the child with that id including the child's attributes:
+  describe 'displays beer information when visiting a breweries beer page' do
+    it 'shows information for brewery1 beer page' do
+      visit "/breweries/#{@brewery1.id}/beers"
+
+      expect(page).to have_content(@beer1.name)
+      expect(page).to have_content(@beer1.abv)
+      expect(page).to have_content(@beer1.is_an_ale)
+      expect(page).to have_content(@beer2.name)
+      expect(page).to have_content(@beer2.abv)
+      expect(page).to have_content(@beer2.is_an_ale)
+    end
+
+    it 'does not show information for other brewery beer pages' do
+      visit "/breweries/#{@brewery1.id}/beers"
+
+      expect(page).to_not have_content(@beer3.name)
+      expect(page).to_not have_content(@beer3.abv)
+    end
+  end
+
+  # NEEDS A BETTER TEST
+  # it 'breweries are sorted by creation date, newest to oldest' do
+  #   visit '/breweries'
+  #
+  #   save_and_open_page
+  # end
+
+  it 'brewery show page shows how many individual beers are associated with that brewery' do
+    visit "/breweries/#{@brewery1.id}"
+
+    expect(page).to have_content("Serves 2 different beers.")
+  end
+
+  it 'has a link to the breweries index at the top of the page' do
+    visit "/breweries/#{@brewery1.id}"
+    click_on('Breweries Index')
+
+    expect(page).to have_content("Breweries")
+
+    visit "/beers"
+    click_on('Breweries Index')
+
+    expect(page).to have_content("Breweries")
+  end
+
+  it 'has a link to the beers index at the top of the page' do
+    visit "/breweries/#{@brewery1.id}"
+    click_on('Beers Index')
+
+    expect(page).to have_content("All Beers:")
+
+    visit "/beers"
+    click_on('Beers Index')
+
+    expect(page).to have_content("All Beers:")
+  end
+
+  it 'breweries show page has a link to the beers for said brewery' do
+    visit "/breweries/#{@brewery1.id}"
+    click_on("All Beers Served by #{@brewery1.name}")
+
+    expect(page).to have_content("Beers served by #{@brewery1.name}")
+  end
+end
