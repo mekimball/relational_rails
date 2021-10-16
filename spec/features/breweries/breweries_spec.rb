@@ -3,34 +3,34 @@ require 'rails_helper'
 RSpec.describe 'the breweries show page' do
   before(:each) do
     @brewery1 = Brewery.create!({
-      name: "Bob's Pub",
-      number_of_employees: 635432,
-      has_food: true
-      })
+                                  name: "Bob's Pub",
+                                  number_of_employees: 635_432,
+                                  has_food: true
+                                })
     # sleep 1
     @brewery2 = Brewery.create!({
-      name: "Ratio",
-      number_of_employees: 655432,
-      has_food: false
-      })
+                                  name: 'Ratio',
+                                  number_of_employees: 655_432,
+                                  has_food: false
+                                })
     @beer1 = Beer.create!({
-      name: "Spotted Cow",
-      abv: 4.5,
-      is_an_ale: true,
-      brewery_id: @brewery1.id
-      })
+                            name: 'Spotted Cow',
+                            abv: 4.5,
+                            is_an_ale: true,
+                            brewery_id: @brewery1.id
+                          })
     @beer2 = Beer.create!({
-      name: "Repeater",
-      abv: 6.2,
-      is_an_ale: false,
-      brewery_id: @brewery1.id
-      })
+                            name: 'Repeater',
+                            abv: 6.2,
+                            is_an_ale: false,
+                            brewery_id: @brewery1.id
+                          })
     @beer3 = Beer.create!({
-      name: "Hold Steady",
-      abv: 8.0,
-      is_an_ale: true,
-      brewery_id: @brewery2.id
-      })
+                            name: 'Hold Steady',
+                            abv: 8.0,
+                            is_an_ale: true,
+                            brewery_id: @brewery2.id
+                          })
   end
 
   describe 'displays the names of each brewery in the system' do
@@ -122,31 +122,31 @@ RSpec.describe 'the breweries show page' do
   it 'brewery show page shows how many individual beers are associated with that brewery' do
     visit "/breweries/#{@brewery1.id}"
 
-    expect(page).to have_content("Serves 2 different beers.")
+    expect(page).to have_content('Serves 2 different beers.')
   end
 
   it 'has a link to the breweries index at the top of the page' do
     visit "/breweries/#{@brewery1.id}"
     click_on('Breweries Index')
 
-    expect(page).to have_content("Breweries")
+    expect(page).to have_content('Breweries')
 
-    visit "/beers"
+    visit '/beers'
     click_on('Breweries Index')
 
-    expect(page).to have_content("Breweries")
+    expect(page).to have_content('Breweries')
   end
 
   it 'has a link to the beers index at the top of the page' do
     visit "/breweries/#{@brewery1.id}"
     click_on('Beers Index')
 
-    expect(page).to have_content("All Beers:")
+    expect(page).to have_content('All Beers:')
 
-    visit "/beers"
+    visit '/beers'
     click_on('Beers Index')
 
-    expect(page).to have_content("All Beers:")
+    expect(page).to have_content('All Beers:')
   end
 
   it 'breweries show page has a link to the beers for said brewery' do
@@ -155,35 +155,34 @@ RSpec.describe 'the breweries show page' do
 
     expect(page).to have_content("Beers served by #{@brewery1.name}")
   end
-  
+
   describe 'creates a new brewery' do
     it 'has a link to create a new brewery record' do
-      
-      visit "/breweries"
-      
-      click_on("Add a new brewery")
-      
-      expect(page).to have_content("Create a New Brewery:")
+      visit '/breweries'
+
+      click_on('Add a new brewery')
+
+      expect(page).to have_content('Create a New Brewery:')
     end
 
     it 'creates a new brewery record' do
-      visit "breweries/new"
+      visit 'breweries/new'
 
       page.fill_in('brewery[name]', with: 'Test Brewery')
       page.fill_in('brewery[number_of_employees]', with: 26)
       page.fill_in('brewery[has_food]', with: true)
       click_button('Create Brewery')
       save_and_open_page
-      expect(page).to have_content("Test Brewery")
+      expect(page).to have_content('Test Brewery')
     end
   end
-  
+
   describe 'updates an existing brewery' do
     it 'has a link for update brewery' do
       visit "/breweries/#{@brewery1.id}"
-      
-      click_on("Update Brewery")
-      
+
+      click_on('Update Brewery')
+
       expect(page).to have_content("Update #{@brewery1.name}")
     end
 
@@ -195,19 +194,38 @@ RSpec.describe 'the breweries show page' do
       page.fill_in('brewery[has_food]', with: false)
       click_button('Update Brewery')
 
-      expect(page).to have_content("Test Brewery")
+      expect(page).to have_content('Test Brewery')
       save_and_open_page
+    end
+  end
+
+  describe 'creates a new beer for a brewery' do
+    it 'has a link to create a new beer' do
+      visit "/breweries/#{@brewery1.id}/beers"
+
+      expect(page).to have_content('Create Beer')
+    end
+
+    it 'can create a beer' do
+      visit "/breweries/#{@brewery1.id}/beers/new"
+
+      page.fill_in('beer[name]', with: 'Emergency Drinking Beer')
+      page.fill_in('beer[abv]', with: 5.7)
+      page.fill_in('beer[is_an_ale]', with: false)
+      click_button('Create Beer')
+
+      expect(page).to have_content('Emergency Drinking Beer')
     end
   end
 end
 
 # As a visitor
-# When I visit a parent show page
-# Then I see a link to update the parent "Update Parent"
-# When I click the link "Update Parent"
-# Then I am taken to '/parents/:id/edit' where I  see a form to edit the parent's attributes:
-# When I fill out the form with updated information
-# And I click the button to submit the form
-# Then a `PATCH` request is sent to '/parents/:id',
-# the parent's info is updated,
-# and I am redirected to the Parent's Show page where I see the parent's updated info
+# When I visit a Parent Childs Index page
+# Then I see a link to add a new adoptable child for that parent "Create Child"
+# When I click the link
+# I am taken to '/parents/:parent_id/child_table_name/new' where I see a form to add a new adoptable child
+# When I fill in the form with the child's attributes:
+# And I click the button "Create Child"
+# Then a `POST` request is sent to '/parents/:parent_id/child_table_name',
+# a new child object/row is created for that parent,
+# and I am redirected to the Parent Childs Index page where I can see the new child listed
