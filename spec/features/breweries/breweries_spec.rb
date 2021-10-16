@@ -7,7 +7,7 @@ RSpec.describe 'the breweries show page' do
       number_of_employees: 635432,
       has_food: true
       })
-    sleep 1
+    # sleep 1
     @brewery2 = Brewery.create!({
       name: "Ratio",
       number_of_employees: 655432,
@@ -155,4 +155,37 @@ RSpec.describe 'the breweries show page' do
 
     expect(page).to have_content("Beers served by #{@brewery1.name}")
   end
+  
+  describe 'creates a new brewery' do
+    it 'has a link to create a new brewery record' do
+      
+      visit "/breweries"
+      
+      click_on("Add a new brewery")
+      
+      expect(page).to have_content("Create a New Brewery:")
+    end
+
+    it 'creates a new brewery record' do
+      visit "breweries/new"
+
+      page.fill_in('brewery[name]', with: 'Test Brewery')
+      page.fill_in('brewery[number_of_employees]', with: 26)
+      page.fill_in('brewery[has_food]', with: true)
+      click_button('Create Brewery')
+      save_and_open_page
+      expect(page).to have_content("Test Brewery")
+    end
+  end
 end
+
+# As a visitor
+# When I visit the Parent Index page
+# Then I see a link to create a new Parent record, "New Parent"
+# When I click this link
+# Then I am taken to '/parents/new' where I  see a form for a new parent record
+# When I fill out the form with a new parent's attributes:
+# And I click the button "Create Parent" to submit the form
+# Then a `POST` request is sent to the '/parents' route,
+# a new parent record is created,
+# and I am redirected to the Parent Index page where I see the new Parent displayed.
