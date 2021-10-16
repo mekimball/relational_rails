@@ -177,15 +177,37 @@ RSpec.describe 'the breweries show page' do
       expect(page).to have_content("Test Brewery")
     end
   end
+  
+  describe 'updates an existing brewery' do
+    it 'has a link for update brewery' do
+      visit "/breweries/#{@brewery1.id}"
+      
+      click_on("Update Brewery")
+      
+      expect(page).to have_content("Update #{@brewery1.name}")
+    end
+
+    it 'updates brewery information' do
+      visit "/breweries/#{@brewery1.id}/edit"
+
+      page.fill_in('brewery[name]', with: 'Test Brewery')
+      page.fill_in('brewery[number_of_employees]', with: 26)
+      page.fill_in('brewery[has_food]', with: false)
+      click_button('Update Brewery')
+
+      expect(page).to have_content("Test Brewery")
+      save_and_open_page
+    end
+  end
 end
 
 # As a visitor
-# When I visit the Parent Index page
-# Then I see a link to create a new Parent record, "New Parent"
-# When I click this link
-# Then I am taken to '/parents/new' where I  see a form for a new parent record
-# When I fill out the form with a new parent's attributes:
-# And I click the button "Create Parent" to submit the form
-# Then a `POST` request is sent to the '/parents' route,
-# a new parent record is created,
-# and I am redirected to the Parent Index page where I see the new Parent displayed.
+# When I visit a parent show page
+# Then I see a link to update the parent "Update Parent"
+# When I click the link "Update Parent"
+# Then I am taken to '/parents/:id/edit' where I  see a form to edit the parent's attributes:
+# When I fill out the form with updated information
+# And I click the button to submit the form
+# Then a `PATCH` request is sent to '/parents/:id',
+# the parent's info is updated,
+# and I am redirected to the Parent's Show page where I see the parent's updated info

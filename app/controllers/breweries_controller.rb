@@ -22,4 +22,20 @@ class BreweriesController < ApplicationController
       @brewery.save
     redirect_to "/breweries"
   end
+
+  def edit
+    @brewery = Brewery.find(params[:id])
+  end
+  
+  def update
+    brewery = Brewery.find(params[:id])
+    brewery.update({ 
+      name: params[:brewery][:name],
+      number_of_employees: params[:brewery][:number_of_employees],
+      has_food: params[:brewery][:has_food]
+      })
+      brewery.save
+    redirect_to "/breweries/#{brewery.id}"
+  end
 end
+
