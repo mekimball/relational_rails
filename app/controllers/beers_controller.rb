@@ -1,6 +1,6 @@
 class BeersController < ApplicationController
   def index
-    @beers = Beer.all
+    @beers = Beer.where("is_an_ale = true")
   end
 
   def show
@@ -10,6 +10,13 @@ class BeersController < ApplicationController
   def show_by_brewery
     @brewery = Brewery.find(params[:id])
     @beers = Beer.where("brewery_id = #{params[:id]}")
+    @beers = @beers.sort_by{|beer| beer.name}
+  end
+
+  def show_by_brewery_alphabetically
+    @brewery = Brewery.find(params[:id])
+    @beers = Beer.where("brewery_id = #{params[:id]}")
+    @beers = @beers.sort_by{|beer| beer.name}
   end
 
   def new

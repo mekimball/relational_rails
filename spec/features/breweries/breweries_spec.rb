@@ -237,14 +237,50 @@ RSpec.describe 'the breweries show page' do
       expect(page).to have_content('Test Beer')
     end
   end
+
+
+  it 'returns beers where is_an_ale is true' do
+    visit "/beers"
+
+    expect(page).to have_content(@beer1.name)
+    expect(page).to have_content(@beer3.name)
+    expect(page).to_not have_content(@beer2.name)
+    save_and_open_page
+  end
+
+  it 'can sort alphabetically' do
+    beer5 = Beer.create!({
+                            name: 'A Spotted Cow',
+                            abv: 4.5,
+                            is_an_ale: true,
+                            brewery_id: @brewery1.id
+                          })
+    visit "/breweries/#{@brewery1.id}/beers"
+
+    click_on "Sort Alphabetically"
+  end
+
+  describe 'has a link to edit from index pages' do
+    it 'has a link to edit brewery page' do
+      visit "/breweries"
+
+      click_on("Edit #{@brewery1.name}'s Info")
+
+      expect(page).to have_content("Update #{@brewery1.name}")
+    end
+
+    it 'has a link to edit beer page' do
+      visit "/beers"
+
+      click_on("Edit #{@beer1.name}'s Info")
+
+      expect(page).to have_content("Update #{@beer1.name}")
+    end
+  end
 end
 
 # As a visitor
-# When I visit a Child Show page
-# Then I see a link to update that Child "Update Child"
-# When I click the link
-# I am taken to '/child_table_name/:id/edit' where I see a form to edit the child's attributes:
-# When I click the button to submit the form "Update Child"
-# Then a `PATCH` request is sent to '/child_table_name/:id',
-# the child's data is updated,
-# and I am redirected to the Child Show page where I see the Child's updated information
+# When I visit the Parent's children Index Page
+# Then I see a link to sort children in alphabetical order
+# When I click on the link
+# I'm taken back to the Parent's children Index Page where I see all of the parent's children in alphabetical order
