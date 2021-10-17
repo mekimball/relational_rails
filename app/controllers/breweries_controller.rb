@@ -14,7 +14,7 @@ class BreweriesController < ApplicationController
   end
 
   def create
-    @brewery = Brewery.new({ 
+    @brewery = Brewery.new({
       name: params[:brewery][:name],
       number_of_employees: params[:brewery][:number_of_employees],
       has_food: params[:brewery][:has_food]
@@ -26,10 +26,10 @@ class BreweriesController < ApplicationController
   def edit
     @brewery = Brewery.find(params[:id])
   end
-  
+
   def update
     brewery = Brewery.find(params[:id])
-    brewery.update({ 
+    brewery.update({
       name: params[:brewery][:name],
       number_of_employees: params[:brewery][:number_of_employees],
       has_food: params[:brewery][:has_food]
@@ -37,5 +37,10 @@ class BreweriesController < ApplicationController
       brewery.save
     redirect_to "/breweries/#{brewery.id}"
   end
-end
 
+  def destroy
+    Beer.where(:brewery_id == params[:id]).delete_all
+    Brewery.destroy(params[:id])
+    redirect_to '/breweries'
+  end
+end
