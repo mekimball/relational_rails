@@ -6,7 +6,11 @@
 <% @breweries.each do |brewery| %>
   <p><%= brewery.name %>, created at <%= brewery.created_at %></p>
   <a href="/breweries/<%= brewery.id %>/edit">Edit <%= brewery.name %>'s Info</a>
+  <form action="/breweries/<%= brewery.id %>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete <%= brewery.name %>"/>
+  </form>
 <% end %>
 
 <a href="/breweries/new">Add a new brewery</a>
-
