@@ -8,7 +8,6 @@ class BeersController < ApplicationController
   end
 
   def show_by_brewery
-    require 'pry'; binding.pry
     @brewery = Brewery.find(params[:id])
     @beers = Beer.where("brewery_id = #{params[:id]}")
   end
@@ -27,6 +26,22 @@ class BeersController < ApplicationController
       brewery_id: @brewery.id
       })
       @beer.save
-    redirect_to "/breweries/:id/beers"
+    redirect_to "/breweries/#{params[:id]}/beers"
+  end
+
+  def edit
+    @beer = Beer.find(params[:id])
+  end
+
+  def update
+    beer = Beer.find(params[:id])
+    beer.update({ 
+      name: params[:beer][:name],
+      abv: params[:beer][:abv],
+      is_an_ale: params[:beer][:is_an_ale]
+      })
+      # require 'pry'; binding.pry
+      beer.save
+      redirect_to "/beers/#{beer.id}"
   end
 end

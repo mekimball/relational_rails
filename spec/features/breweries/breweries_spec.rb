@@ -195,7 +195,6 @@ RSpec.describe 'the breweries show page' do
       click_button('Update Brewery')
 
       expect(page).to have_content('Test Brewery')
-      save_and_open_page
     end
   end
 
@@ -217,15 +216,35 @@ RSpec.describe 'the breweries show page' do
       expect(page).to have_content('Emergency Drinking Beer')
     end
   end
+
+  describe 'creates a new beer for a brewery' do
+    it 'has an update link' do
+
+      visit "/beers/#{@beer1.id}"
+      click_on('Update Beer')
+
+      expect(page).to have_content("Update #{@beer1.name}")
+    end
+    
+    it 'updates beer information' do
+      visit "/beers/#{@beer1.id}/edit"
+
+      page.fill_in('beer[name]', with: 'Test Beer')
+      page.fill_in('beer[abv]', with: 6.66)
+      page.fill_in('beer[is_an_ale]', with: false)
+      click_button('Update Beer')
+
+      expect(page).to have_content('Test Beer')
+    end
+  end
 end
 
 # As a visitor
-# When I visit a Parent Childs Index page
-# Then I see a link to add a new adoptable child for that parent "Create Child"
+# When I visit a Child Show page
+# Then I see a link to update that Child "Update Child"
 # When I click the link
-# I am taken to '/parents/:parent_id/child_table_name/new' where I see a form to add a new adoptable child
-# When I fill in the form with the child's attributes:
-# And I click the button "Create Child"
-# Then a `POST` request is sent to '/parents/:parent_id/child_table_name',
-# a new child object/row is created for that parent,
-# and I am redirected to the Parent Childs Index page where I can see the new child listed
+# I am taken to '/child_table_name/:id/edit' where I see a form to edit the child's attributes:
+# When I click the button to submit the form "Update Child"
+# Then a `PATCH` request is sent to '/child_table_name/:id',
+# the child's data is updated,
+# and I am redirected to the Child Show page where I see the Child's updated information
