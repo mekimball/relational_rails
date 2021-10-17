@@ -8,3 +8,9 @@
 <p>Serves <%= @beers.count %> different beers.</p>
 <a href="/breweries/<%= @brewery.id %>/beers">All Beers Served by <%= @brewery.name %></a>
 <a href="/breweries/<%= @brewery.id %>/edit">Update Brewery</a>
+
+<form action="/breweries/<%= @brewery.id %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete this Brewery"/>
+</form>

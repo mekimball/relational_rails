@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'the breweries show page' do
+RSpec.describe 'all breweries tests' do
   before(:each) do
     @brewery1 = Brewery.create!({
                                   name: "Bob's Pub",
@@ -112,11 +112,10 @@ RSpec.describe 'the breweries show page' do
     end
   end
 
-  # NEEDS A BETTER TEST
   # it 'breweries are sorted by creation date, newest to oldest' do
   #   visit '/breweries'
   #
-  #   save_and_open_page
+  #   expect('Ratio').to appear_before("Bob's Pub")
   # end
 
   it 'brewery show page shows how many individual beers are associated with that brewery' do
@@ -172,7 +171,7 @@ RSpec.describe 'the breweries show page' do
       page.fill_in('brewery[number_of_employees]', with: 26)
       page.fill_in('brewery[has_food]', with: true)
       click_button('Create Brewery')
-      save_and_open_page
+
       expect(page).to have_content('Test Brewery')
     end
   end
@@ -225,7 +224,7 @@ RSpec.describe 'the breweries show page' do
 
       expect(page).to have_content("Update #{@beer1.name}")
     end
-    
+
     it 'updates beer information' do
       visit "/beers/#{@beer1.id}/edit"
 
@@ -245,20 +244,22 @@ RSpec.describe 'the breweries show page' do
     expect(page).to have_content(@beer1.name)
     expect(page).to have_content(@beer3.name)
     expect(page).to_not have_content(@beer2.name)
-    save_and_open_page
   end
 
-  it 'can sort alphabetically' do
-    beer5 = Beer.create!({
-                            name: 'A Spotted Cow',
-                            abv: 4.5,
-                            is_an_ale: true,
-                            brewery_id: @brewery1.id
-                          })
-    visit "/breweries/#{@brewery1.id}/beers"
-
-    click_on "Sort Alphabetically"
-  end
+  # it 'can sort alphabetically' do
+  #   beer5 = Beer.create!({
+  #                           name: 'Chocolate Stout',
+  #                           abv: 4.5,
+  #                           is_an_ale: true,
+  #                           brewery_id: @brewery1.id
+  #                         })
+  #   visit "/breweries/#{@brewery1.id}/beers"
+  #
+  #   click_on "Sort Alphabetically"
+  #
+  #   expect('Chocolate Stout').to appear_before('Repeater')
+  #   expect('Repeater').to appear_before('Spotted Cow')
+  # end
 
   describe 'has a link to edit from index pages' do
     it 'has a link to edit brewery page' do
@@ -277,10 +278,48 @@ RSpec.describe 'the breweries show page' do
       expect(page).to have_content("Update #{@beer1.name}")
     end
   end
-end
 
-# As a visitor
-# When I visit the Parent's children Index Page
-# Then I see a link to sort children in alphabetical order
-# When I click on the link
-# I'm taken back to the Parent's children Index Page where I see all of the parent's children in alphabetical order
+  it 'can delete breweries' do
+    visit "/breweries/#{@brewery1.id}"
+
+    click_on("Delete this Brewery")
+
+    expect(page).to have_content("Breweries")
+    expect(page).to_not have_content("#{@brewery1.name}")
+  end
+
+  it 'can delete beers' do
+    visit "/beers/#{@beer1.id}"
+
+    click_on("Delete this Beer")
+
+    expect(page).to have_content("Beers")
+    expect(page).to_not have_content("#{@beer1.name}")
+  end
+
+  # User Story 21, Display Records Over a Given Threshold (x2)
+  #
+  # As a visitor
+  # When I visit the Parent's children Index Page
+  # I see a form that allows me to input a number value
+  # When I input a number value and click the submit button that reads 'Only return records with more than `number` of `column_name`'
+  # Then I am brought back to the current index page with only the records that meet that threshold shown.
+
+  it 'can delete breweries from the brewery index' do
+    visit "/breweries"
+
+    click_on("Delete #{@brewery1.name}")
+
+    expect(page).to have_content("Breweries")
+    expect(page).to_not have_content("#{@brewery1.name}")
+  end
+
+  it 'can delete beers from the brewery index' do
+    visit "/beers"
+
+    click_on("Delete #{@beer1.name}")
+
+    expect(page).to have_content("Beers")
+    expect(page).to_not have_content("#{@beer1.name}")
+  end
+end

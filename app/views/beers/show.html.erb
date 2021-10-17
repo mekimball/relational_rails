@@ -6,3 +6,9 @@
 <p>Is it an ale? <%= @beer.is_an_ale %></p>
 
 <a href="/beers/<%= @beer.id%>/edit">Update Beer</a>
+
+<form action="/beers/<%= @beer.id %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete this Beer"/>
+</form>
