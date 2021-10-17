@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   get '/breweries/:id/beers/new', to: 'beers#new'
   get '/beers/:id/edit', to: 'beers#edit'
   patch '/beers/:id', to: 'beers#update'
+  delete '/breweries/:id', to: 'breweries#destroy'
+  delete '/beers/:id', to: 'beers#destroy'
 end
