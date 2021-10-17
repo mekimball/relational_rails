@@ -6,4 +6,5 @@
   <p>Beer name: <%= beer.name %> |
     Beer ABV: <%= beer.abv %> |
     Is it an ale? <%= beer.is_an_ale %></p>
+    <a href="/beers/<%= beer.id %>/edit">Edit <%= beer.name %>'s Info</a>
 <% end %>

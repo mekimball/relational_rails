@@ -5,4 +5,8 @@
 <% @breweries = @breweries.order("created_at desc") %>
 <% @breweries.each do |brewery| %>
   <p><%= brewery.name %>, created at <%= brewery.created_at %></p>
+  <a href="/breweries/<%= brewery.id %>/edit">Edit <%= brewery.name %>'s Info</a>
 <% end %>
+
+<a href="/breweries/new">Add a new brewery</a>
+
