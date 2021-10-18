@@ -10,14 +10,8 @@ class BeersController < ApplicationController
   def show_by_brewery
     @brewery = Brewery.find(params[:id])
     @beers = Beer.where("brewery_id = #{params[:id]}")
-    @beers = @beers.sort_by{|beer| beer.name}
-  end
-
-  def filtered
-    @brewery = Brewery.find(params[:id])
-    @beers = Beer.where("brewery_id = #{params[:id]}")
-    @beers = @beers.where("abv > #{params[:beers][:abv]}")
-    redirect_to "breweries/#{@brewery.id}/beers"
+    @beers = @beers.sort_by{|beer| beer.name} if params[:q] == 'alpha'
+    @beers = @beers.where("abv > #{params[:abv]}") unless params[:abv].nil?
   end
 
   def sorted
