@@ -112,11 +112,11 @@ RSpec.describe 'all breweries tests' do
     end
   end
 
-  # it 'breweries are sorted by creation date, newest to oldest' do
-  #   visit '/breweries'
-  #
-  #   expect('Ratio').to appear_before("Bob's Pub")
-  # end
+  it 'breweries are sorted by creation date, newest to oldest' do
+    visit '/breweries'
+
+    expect('Ratio').to appear_before("Bob's Pub")
+  end
 
   it 'brewery show page shows how many individual beers are associated with that brewery' do
     visit "/breweries/#{@brewery1.id}"
@@ -246,20 +246,20 @@ RSpec.describe 'all breweries tests' do
     expect(page).to_not have_content(@beer2.name)
   end
 
-  # it 'can sort alphabetically' do
-  #   beer5 = Beer.create!({
-  #                           name: 'Chocolate Stout',
-  #                           abv: 4.5,
-  #                           is_an_ale: true,
-  #                           brewery_id: @brewery1.id
-  #                         })
-  #   visit "/breweries/#{@brewery1.id}/beers"
-  #
-  #   click_on "Sort Alphabetically"
-  #
-  #   expect('Chocolate Stout').to appear_before('Repeater')
-  #   expect('Repeater').to appear_before('Spotted Cow')
-  # end
+  it 'can sort alphabetically' do
+    beer5 = Beer.create!({
+                            name: 'Chocolate Stout',
+                            abv: 4.5,
+                            is_an_ale: true,
+                            brewery_id: @brewery1.id
+                          })
+    visit "/breweries/#{@brewery1.id}/beers"
+
+    click_on "Sort Alphabetically"
+
+    expect('Chocolate Stout').to appear_before('Repeater')
+    expect('Repeater').to appear_before('Spotted Cow')
+  end
 
   describe 'has a link to edit from index pages' do
     it 'has a link to edit brewery page' do
@@ -297,13 +297,16 @@ RSpec.describe 'all breweries tests' do
     expect(page).to_not have_content("#{@beer1.name}")
   end
 
-  # User Story 21, Display Records Over a Given Threshold (x2)
-  #
-  # As a visitor
-  # When I visit the Parent's children Index Page
-  # I see a form that allows me to input a number value
-  # When I input a number value and click the submit button that reads 'Only return records with more than `number` of `column_name`'
-  # Then I am brought back to the current index page with only the records that meet that threshold shown.
+  it 'can filter beers by a certain specified ABV' do
+    visit "/breweries/#{@brewery1.id}/beers"
+
+    page.fill_in('abv', with: '5.0')
+
+    click_on ("Filter")
+
+    expect(page).to have_content ("#{@beer2.name}")
+    expect(page).to_not have_content ("#{@beer1.name}")
+  end
 
   it 'can delete breweries from the brewery index' do
     visit "/breweries"

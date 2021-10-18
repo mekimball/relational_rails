@@ -5,9 +5,17 @@
 
 
 <h1>Beers served by <%= @brewery.name %></h1>
-<a href="/breweries/<%= @brewery.id %>/beers/sorted">Sort Alphabetically</a>
+<a href="/breweries/<%= @brewery.id %>/beers/?q=alpha">Sort Alphabetically</a>
 <ul>
   <% @beers.each do |beer| %>
     <li><%= beer.name %>: ABV - <%= beer.abv %>, Is an ale? - <%= beer.is_an_ale %></li>
   <% end %>
 </ul>
+
+<a href="/breweries/<%= @brewery.id %>/beers/new">Create Beer</a>
+
+<%= form_with url: "/breweries/#{@brewery.id}/beers", method: :get do |form| %>
+<%= form.label :abv, "ABV Value to Filter by" %>
+<%= form.number_field :abv, step: :any %>
+<%= form.submit("Filter") %>
+<% end %>

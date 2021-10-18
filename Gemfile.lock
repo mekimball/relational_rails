@@ -78,6 +78,8 @@ GEM
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    launchy (2.5.0)
+      addressable (~> 2.7)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -87,7 +89,6 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    map (6.6.0)
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
@@ -98,6 +99,9 @@ GEM
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
+    orderly (0.1.1)
+      capybara (>= 1.1)
+      rspec (>= 2.14)
     pg (1.2.3)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -126,12 +130,6 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
-    rails_current (2.2.0)
-      map (~> 6.0)
-    rails_default_url_options (6.0.0)
-    rails_helper (2.2.2)
-      rails_current (>= 1.0)
-      rails_default_url_options (>= 1.0)
     railties (5.2.6)
       actionpack (= 5.2.6)
       activesupport (= 5.2.6)
@@ -143,6 +141,10 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.1.1)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -211,12 +213,13 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.2)
   jbuilder (~> 2.5)
+  launchy
   listen (>= 3.0.5, < 3.2)
+  orderly
   pg (>= 0.18, < 2.0)
   pry
   puma (~> 3.11)
   rails (~> 5.2.6)
-  rails_helper
   rspec-rails
   sass-rails (~> 5.0)
   simplecov
