@@ -1,5 +1,6 @@
 <form action="/breweries/<%= @brewery.id %>/beers" method="post">
   <p>Create a New Beer:</p>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <label for="name">Beer Name:</label><br>
   <input type='text' name='beer[name]'/><br/>
   <label for="ABV">ABV:</label><br>

@@ -1,3 +1,4 @@
+<a href="/">Main Page</a>
 <a href="/food_groups">Food Groups Index</a>
 <a href="/foods">Foods Index</a>
 
@@ -5,6 +6,7 @@
 <% @food_groups = @food_groups.order("created_at desc") %>
 <% @food_groups.each do |food_group| %>
   <p><%= food_group.name %>, created at <%= food_group.created_at %></p>
+  <a href="/food_groups/<%= food_group.id %>">Look at this food group's information.</a>
   <a href="/food_groups/<%= food_group.id %>/edit">Edit <%= food_group.name %>'s Info</a>
   <form action="/food_groups/<%= food_group.id %>" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">

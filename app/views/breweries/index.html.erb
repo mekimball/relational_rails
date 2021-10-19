@@ -5,6 +5,7 @@
 <% @breweries = @breweries.order("created_at desc") %>
 <% @breweries.each do |brewery| %>
   <p><%= brewery.name %>, created at <%= brewery.created_at %></p>
+  <a href="/breweries/<%= brewery.id %>">Look at this brewery's information.</a>
   <a href="/breweries/<%= brewery.id %>/edit">Edit <%= brewery.name %>'s Info</a>
   <form action="/breweries/<%= brewery.id %>" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">

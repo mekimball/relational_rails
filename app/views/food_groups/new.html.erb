@@ -1,5 +1,6 @@
 <form action="/food_groups" method="post">
   <p>Create a New Food Group:</p>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <label for="name">Food Group Name:</label><br>
   <input type='text' name='food_group[name]'/><br/>
   <label for="rating_out_of_ten">Rating Out of Ten:</label><br>

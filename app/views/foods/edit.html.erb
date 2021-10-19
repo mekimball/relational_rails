@@ -1,7 +1,8 @@
 <form action="/foods/<%= @food.id %>" method="post">
   <input type="visible" name="_method" value="PATCH" />
   <p>Update <%= @food.name %></p>
-    <label for="name">Food Name:</label><br>
+  <label for="name">Food Name:</label><br>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <input type='text' name='food[name]'/><br/>
   <label for="number_in_stock">Number in Stock:</label><br>
   <input type='text' name='food[number_in_stock]'/><br/>

@@ -1,3 +1,7 @@
+<a href="/">Main Page</a>
+<a href="/food_groups">Food Group Index</a>
+<a href="/foods">Foods Index</a>
+
 <h1>Foods that are <%= @food_group.name %></h1>
 <a href="/food_groups/<%= @food_group.id %>/foods/?q=alpha">Sort Alphabetically</a>
 <ul>
@@ -6,10 +10,10 @@
   <% end %>
 </ul>
 
-<a href="/food_groups/<%= @food_group.id %>/food/new">Create Food</a>
+<a href="/food_groups/<%= @food_group.id %>/foods/new">Create Food</a>
 
 <%= form_with url: "/food_groups/#{@food_group.id}/foods", method: :get do |form| %>
-<%= form.label :number_in_stock, "Value to Filter by" %>
+<%= form.label :number_in_stock, "Filter out foods with quantity lower than:" %>
 <%= form.number_field :number_in_stock, step: :any %>
 <%= form.submit("Filter") %>
 <% end %>

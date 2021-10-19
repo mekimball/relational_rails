@@ -1,6 +1,7 @@
 <form action="/breweries" method="post">
   <p>Create a New Brewery:</p>
   <label for="name">Brewery Name:</label><br>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <input type='text' name='brewery[name]'/><br/>
   <label for="number_of_employees">Number of Employees:</label><br>
   <input type='text' name='brewery[number_of_employees]'/><br/>
