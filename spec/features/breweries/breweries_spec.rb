@@ -7,7 +7,6 @@ RSpec.describe 'all breweries tests' do
                                   number_of_employees: 635_432,
                                   has_food: true
                                 })
-    # sleep 1
     @brewery2 = Brewery.create!({
                                   name: 'Ratio',
                                   number_of_employees: 655_432,
@@ -63,55 +62,6 @@ RSpec.describe 'all breweries tests' do
       expect(page).to_not have_content(@brewery2.has_food)
     end
   end
-
-  describe 'displays all beers when visiting the page' do
-    it 'shows all beer information for each beer' do
-      visit '/beers/'
-      expect(page).to have_content(@beer1.name)
-      expect(page).to have_content(@beer1.abv)
-      expect(page).to have_content(@beer1.is_an_ale)
-      expect(page).to have_content(@beer3.name)
-      expect(page).to have_content(@beer3.abv)
-      expect(page).to have_content(@beer3.is_an_ale)
-    end
-  end
-
-  describe 'displays individual beer information when visiting a beer page' do
-    it 'shows information for selected beer page' do
-      visit "/beers/#{@beer1.id}"
-      expect(page).to have_content(@beer1.name)
-      expect(page).to have_content(@beer1.abv)
-      expect(page).to have_content(@beer1.is_an_ale)
-    end
-
-    it "doesn't show information for other beers" do
-      visit "/beers/#{@beer1.id}"
-      expect(page).to_not have_content(@beer2.name)
-      expect(page).to_not have_content(@beer2.abv)
-      expect(page).to_not have_content(@beer2.is_an_ale)
-    end
-  end
-
-  describe 'displays beer information when visiting a breweries beer page' do
-    it 'shows information for brewery1 beer page' do
-      visit "/breweries/#{@brewery1.id}/beers"
-
-      expect(page).to have_content(@beer1.name)
-      expect(page).to have_content(@beer1.abv)
-      expect(page).to have_content(@beer1.is_an_ale)
-      expect(page).to have_content(@beer2.name)
-      expect(page).to have_content(@beer2.abv)
-      expect(page).to have_content(@beer2.is_an_ale)
-    end
-
-    it 'does not show information for other brewery beer pages' do
-      visit "/breweries/#{@brewery1.id}/beers"
-
-      expect(page).to_not have_content(@beer3.name)
-      expect(page).to_not have_content(@beer3.abv)
-    end
-  end
-
   it 'breweries are sorted by creation date, newest to oldest' do
     visit '/breweries'
 
@@ -197,65 +147,16 @@ RSpec.describe 'all breweries tests' do
     end
   end
 
-  describe 'creates a new beer for a brewery' do
-    it 'has a link to create a new beer' do
-      visit "/breweries/#{@brewery1.id}/beers"
-
-      expect(page).to have_content('Create Beer')
-    end
-
-    it 'can create a beer' do
-      visit "/breweries/#{@brewery1.id}/beers/new"
-
-      page.fill_in('beer[name]', with: 'Emergency Drinking Beer')
-      page.fill_in('beer[abv]', with: 5.7)
-      page.fill_in('beer[is_an_ale]', with: false)
-      click_button('Create Beer')
-
-      expect(page).to have_content('Emergency Drinking Beer')
-    end
-  end
-
-  describe 'creates a new beer for a brewery' do
-    it 'has an update link' do
-
-      visit "/beers/#{@beer1.id}"
-      click_on('Update Beer')
-
-      expect(page).to have_content("Update #{@beer1.name}")
-    end
-
-    it 'updates beer information' do
-      visit "/beers/#{@beer1.id}/edit"
-
-      page.fill_in('beer[name]', with: 'Test Beer')
-      page.fill_in('beer[abv]', with: 6.66)
-      page.fill_in('beer[is_an_ale]', with: false)
-      click_button('Update Beer')
-
-      expect(page).to have_content('Test Beer')
-    end
-  end
-
-
-  it 'returns beers where is_an_ale is true' do
-    visit "/beers"
-
-    expect(page).to have_content(@beer1.name)
-    expect(page).to have_content(@beer3.name)
-    expect(page).to_not have_content(@beer2.name)
-  end
-
   it 'can sort alphabetically' do
     beer5 = Beer.create!({
-                            name: 'Chocolate Stout',
-                            abv: 4.5,
-                            is_an_ale: true,
-                            brewery_id: @brewery1.id
-                          })
+                           name: 'Chocolate Stout',
+                           abv: 4.5,
+                           is_an_ale: true,
+                           brewery_id: @brewery1.id
+                         })
     visit "/breweries/#{@brewery1.id}/beers"
 
-    click_on "Sort Alphabetically"
+    click_on 'Sort Alphabetically'
 
     expect('Chocolate Stout').to appear_before('Repeater')
     expect('Repeater').to appear_before('Spotted Cow')
@@ -263,38 +164,21 @@ RSpec.describe 'all breweries tests' do
 
   describe 'has a link to edit from index pages' do
     it 'has a link to edit brewery page' do
-      visit "/breweries"
+      visit '/breweries'
 
       click_on("Edit #{@brewery1.name}'s Info")
 
       expect(page).to have_content("Update #{@brewery1.name}")
-    end
-
-    it 'has a link to edit beer page' do
-      visit "/beers"
-
-      click_on("Edit #{@beer1.name}'s Info")
-
-      expect(page).to have_content("Update #{@beer1.name}")
     end
   end
 
   it 'can delete breweries' do
     visit "/breweries/#{@brewery1.id}"
 
-    click_on("Delete this Brewery")
+    click_on('Delete this Brewery')
 
-    expect(page).to have_content("Breweries")
-    expect(page).to_not have_content("#{@brewery1.name}")
-  end
-
-  it 'can delete beers' do
-    visit "/beers/#{@beer1.id}"
-
-    click_on("Delete this Beer")
-
-    expect(page).to have_content("Beers")
-    expect(page).to_not have_content("#{@beer1.name}")
+    expect(page).to have_content('Breweries')
+    expect(page).to_not have_content(@brewery1.name.to_s)
   end
 
   it 'can filter beers by a certain specified ABV' do
@@ -302,27 +186,18 @@ RSpec.describe 'all breweries tests' do
 
     page.fill_in('abv', with: '5.0')
 
-    click_on ("Filter")
+    click_on('Filter')
 
-    expect(page).to have_content ("#{@beer2.name}")
-    expect(page).to_not have_content ("#{@beer1.name}")
+    expect(page).to have_content(@beer2.name.to_s)
+    expect(page).to_not have_content(@beer1.name.to_s)
   end
 
   it 'can delete breweries from the brewery index' do
-    visit "/breweries"
+    visit '/breweries'
 
     click_on("Delete #{@brewery1.name}")
 
-    expect(page).to have_content("Breweries")
-    expect(page).to_not have_content("#{@brewery1.name}")
-  end
-
-  it 'can delete beers from the brewery index' do
-    visit "/beers"
-
-    click_on("Delete #{@beer1.name}")
-
-    expect(page).to have_content("Beers")
-    expect(page).to_not have_content("#{@beer1.name}")
+    expect(page).to have_content('Breweries')
+    expect(page).to_not have_content(@brewery1.name.to_s)
   end
 end
