@@ -1,0 +1,16 @@
+<a href="/food_groups">Food Groups Index</a>
+<a href="/foods">Foods Index</a>
+
+<h1>Food Groups</h1>
+<% @food_groups = @food_groups.order("created_at desc") %>
+<% @food_groups.each do |food_group| %>
+  <p><%= food_group.name %>, created at <%= food_group.created_at %></p>
+  <a href="/food_groups/<%= food_group.id %>/edit">Edit <%= food_group.name %>'s Info</a>
+  <form action="/food_groups/<%= food_group.id %>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Delete <%= food_group.name %>"/>
+  </form>
+<% end %>
+
+<a href="/food_groups/new">Add a new Food Group</a>
