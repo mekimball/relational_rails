@@ -1,15 +1,15 @@
-<h1>Foods in <%= @food_group.name %></h1>
-<a href="/food_groups/<%= @food_group.id %>/food/?q=alpha">Sort Alphabetically</a>
+<h1>Foods that are <%= @food_group.name %></h1>
+<a href="/food_groups/<%= @food_group.id %>/foods/?q=alpha">Sort Alphabetically</a>
 <ul>
-  <% @food.each do |food| %>
-    <li><%= food.name %>: Number of Food Item- <%= food.number_of_food_item %>, Is an ale? - <%= food.is_an_ale %></li>
+  <% @foods.each do |food| %>
+    <li><%= food.name %>: Number in Stock - <%= food.number_in_stock %>, Is it in stock? - <%= food.in_stock %></li>
   <% end %>
 </ul>
 
 <a href="/food_groups/<%= @food_group.id %>/food/new">Create Food</a>
 
-<%= form_with url: "/food_groups/#{@food_group.id}/food", method: :get do |form| %>
-<%= form.label :number_of_food_item, "Value to Filter by" %>
-<%= form.number_field :number_of_food_item, step: :any %>
+<%= form_with url: "/food_groups/#{@food_group.id}/foods", method: :get do |form| %>
+<%= form.label :number_in_stock, "Value to Filter by" %>
+<%= form.number_field :number_in_stock, step: :any %>
 <%= form.submit("Filter") %>
 <% end %>

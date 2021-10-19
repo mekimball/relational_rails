@@ -2,7 +2,7 @@
 <a href="/foods">Foods Index</a>
 
 <h1>Information for <%= @food.name %></h1>
-<p>Number of Food Items: <%= @food.number_of_food_item %></p>
+<p>Number of Food Items: <%= @food.number_in_stock %></p>
 <p>Is it in stock? <%= @food.in_stock %></p>
 
 <a href="/foods/<%= @food.id%>/edit">Update Food</a>
