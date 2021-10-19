@@ -1,24 +1,12 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a basic Brewery and Food Groups database created by Matthew Kimball and Alex McConnell.
+It features the following functionality:
 
-Things you may want to cover:
+- Can create new breweries and food groups
+- Can create new beers that belong to breweries
+- Can create new foods that belong to food groups
+- Can view, edit, and delete all of the above
+- Can filter alphabetically within foods belonging to food groups and beers belonging to breweries
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Database Template: https://dbdesigner.page.link/XPTfV4Q13dxUoJUU9
