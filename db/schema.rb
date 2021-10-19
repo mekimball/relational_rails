@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_15_015916) do
+ActiveRecord::Schema.define(version: 2021_10_19_165503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,10 @@ ActiveRecord::Schema.define(version: 2021_10_15_015916) do
     t.boolean "in_stock"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "food_groups_id"
+    t.index ["food_groups_id"], name: "index_foods_on_food_groups_id"
   end
 
   add_foreign_key "beers", "breweries"
+  add_foreign_key "foods", "food_groups", column: "food_groups_id"
 end
