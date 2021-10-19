@@ -1,6 +1,6 @@
 class FoodsController < ApplicationController
   def index
-    @foods = Food.perishable
+    @foods = Food.in_stock
   end
 
   def show
@@ -8,25 +8,25 @@ class FoodsController < ApplicationController
   end
 
   def show_by_food_group
-    @food_group = food_group.find(params[:id])
+    @food_group = FoodGroup.find(params[:id])
     @foods = Food.owned_by_food_group(params)
   end
 
 
   def new
     @food = Food.new
-    @food_group = food_group.find(params[:id])
+    @food_group = FoodGroup.find(params[:id])
   end
 
   def create
-    @food_group = food_group.find(params[:id])
+    @food_group = FoodGroup.find(params[:id])
     @food = Food.create({
       name: params[:food][:name],
-      number_of_food_item: params[:food][:number_of_food_item],
+      number_in_stock: params[:food][:number_in_stock],
       in_stock: params[:food][:in_stock],
-      brewery_id: @food_group.id
+      food_group_id: @food_group.id
       })
-    redirect_to "/breweries/#{params[:id]}/foods"
+    redirect_to "/food_groups/#{params[:id]}/foods"
   end
 
   def edit
@@ -37,7 +37,7 @@ class FoodsController < ApplicationController
     food = Food.find(params[:id])
     food.update({
       name: params[:food][:name],
-      number_of_food_item: params[:food][:number_of_food_item],
+      number_in_stock: params[:food][:number_in_stock],
       in_stock: params[:food][:in_stock]
       })
     food.save
