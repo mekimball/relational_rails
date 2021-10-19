@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_10_19_165503) do
 
   create_table "food_groups", force: :cascade do |t|
     t.string "name"
-    t.integer "rating_out_of_ten"
+    t.float "rating_out_of_ten"
     t.boolean "perishable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
