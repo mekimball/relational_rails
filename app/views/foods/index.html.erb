@@ -1,0 +1,15 @@
+<a href="/food_groups">Food Group Index</a>
+<a href="/foods">Foods Index</a>
+
+<h1>All Foods:</h1>
+<% @foods.each do |food| %>
+  <p>Food name: <%= food.name %> |
+    Number: <%= food.number_of_food_items %> |
+    Is it in Stock? <%= food.in_stock %></p>
+    <a href="/foods/<%= food.id %>/edit">Edit <%= food.name %>'s Info</a>
+    <form action="/foods/<%= food.id %>" method="POST">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete <%= food.name %>"/>
+    </form>
+<% end %>
