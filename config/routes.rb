@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/', to: 'welcome#index'
+
   get '/breweries', to: 'breweries#index'
   get '/breweries/new', to: 'breweries#new'
   post '/breweries', to: 'breweries#create'
