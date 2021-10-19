@@ -1,0 +1,16 @@
+<a href="/food_groups">Food Groups Index</a>
+<a href="/foods">Foods Index</a>
+
+<h1>Food Group Information for <%= @food_group.name %></h1>
+<p>Name: <%= @food_group.name %></p>
+<p>Rating Out of Ten: <%= @food_group.rating_out_of_ten %></p>
+<p>Perishable? <%= @food_group.perishable %></p>
+<p>Includes <%= @foods.count %> different foods.</p>
+<a href="/food_groups/<%= @food_group.id %>/foods">All Foods included in: <%= @food_group.name %></a>
+<a href="/food_groups/<%= @food_group.id %>/edit">Update Food Group</a>
+
+<form action="/food_groups/<%= @food_group.id %>" method="POST">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete this Food Group"/>
+</form>
