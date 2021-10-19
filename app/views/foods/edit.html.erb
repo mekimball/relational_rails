@@ -1,0 +1,11 @@
+<form action="/foods/<%= @food.id %>" method="post">
+  <input type="visible" name="_method" value="PATCH" />
+  <p>Update <%= @food.name %></p>
+    <label for="name">Food Name:</label><br>
+  <input type='text' name='food[name]'/><br/>
+  <label for="number_of_food_items">Number in Stock:</label><br>
+  <input type='text' name='food[number_of_food_items]'/><br/>
+  <label for="in_stock">Is it in Stock?:</label><br>
+  <input type='text' name='food[in_stock]'/><br/>
+  <input type='submit' value='Update Food'/>
+</form>
