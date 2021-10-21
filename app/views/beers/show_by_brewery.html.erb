@@ -13,7 +13,7 @@
 
 <a href="/breweries/<%= @brewery.id %>/beers/new">Create Beer</a>
 
-<%= form_with url: "/breweries/#{@brewery.id}/beers", method: :get do |form| %>
+<%= form_with url: "/breweries/#{@brewery.id}/beers", local: :true, method: :get do |form| %>
 <%= form.label :abv, "ABV Value to Filter by" %>
 <%= form.number_field :abv, step: :any %>
 <%= form.submit("Filter") %>

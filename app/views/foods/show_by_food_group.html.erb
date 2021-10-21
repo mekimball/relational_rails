@@ -12,7 +12,7 @@
 
 <a href="/food_groups/<%= @food_group.id %>/foods/new">Create Food</a>
 
-<%= form_with url: "/food_groups/#{@food_group.id}/foods", method: :get do |form| %>
+<%= form_with url: "/food_groups/#{@food_group.id}/foods", local: :true, method: :get do |form| %>
 <%= form.label :number_in_stock, "Filter out foods with quantity lower than:" %>
 <%= form.number_field :number_in_stock, step: :any %>
 <%= form.submit("Filter") %>
