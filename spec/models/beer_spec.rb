@@ -37,19 +37,26 @@ RSpec.describe Beer do
 
       expect(Beer.owned_by_brewery(test)).to eq([@beer1, @beer2])
     end
-    
+
     it 'alphabetizes beers' do
     test = {id: @brewery1.id,
             q: 'alpha'}
 
       expect(Beer.owned_by_brewery(test)).to eq([@beer2, @beer1])
     end
-    
+
     it 'can filter by beer abv' do
     test = {id: @brewery1.id,
             abv: 5}
 
       expect(Beer.owned_by_brewery(test)).to eq([@beer2])
+    end
+  end
+
+  describe '#ales' do
+    it 'returns only beers that are ales' do
+      expect(Beer.ales).to eq([@beer1, @beer3])
+      expect(Beer.ales).to_not include(@beer2)
     end
   end
 end

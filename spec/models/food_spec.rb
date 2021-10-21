@@ -52,4 +52,11 @@ RSpec.describe Food do
       expect(Food.owned_by_food_group(test)).to eq([@food1])
     end
   end
+
+  describe '#in_stock' do
+    it 'returns only foods that are in stock' do
+      expect(Food.in_stock).to eq([@food1, @food3])
+      expect(Food.in_stock).to_not include(@food2)
+    end
+  end
 end
